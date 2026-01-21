@@ -17,7 +17,7 @@ public class ArithmeticCalculator <T extends Number>{
         System.out.println("저장된 결과값 : " + getResults());
     }
 
-    public void removeResult(T index){
+    public void removeResult(T index){ // 배열 위치 지정해서 지우는기능
         try {
             if(results.isEmpty()){
                 System.out.println("리스트가 비어있습니다.");
@@ -33,9 +33,9 @@ public class ArithmeticCalculator <T extends Number>{
 
     public void clearResutl(){
         results.clear();
-    }
+    } //배열 전체삭제
 
-    public void filter(double num){
+    public void filter(double num){ // 도전과제 3-3 보다큰값출력하기
         results.stream()
                 .filter(result -> result.doubleValue() > num)
                 .forEach(System.out::println);

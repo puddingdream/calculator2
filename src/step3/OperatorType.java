@@ -20,7 +20,7 @@ public enum OperatorType {
         this.symbol = symbol;
         this.function = function;
     }
-
+ //연산부호 enum 에있는걸로 찾는 로직
     public static OperatorType fromSymbol(char op){
         return Arrays.stream(OperatorType.values())
                 .filter(oper -> oper.symbol == op)
@@ -28,6 +28,7 @@ public enum OperatorType {
                 .orElseThrow(() -> new RuntimeException("잘못된 부호입력 : " + op));
     }
 
+    //Bifunction과 세트 Bfunction에 담겨있는 enum 계산식을 실행해서 돌려받음
     public double calculat(double n1, double n2){
         return function.apply(n1, n2);
     }

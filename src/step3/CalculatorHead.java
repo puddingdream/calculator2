@@ -50,7 +50,6 @@ public class CalculatorHead {
             }
             case "0" -> isRinng = false;
 
-
         }
 
     }
