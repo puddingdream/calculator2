@@ -26,10 +26,10 @@ public class App {
                 case '-' -> result = num1 - num2;
                 case '*' -> result = num1 * num2;
                 case '/' -> {
-                    if (num2 != 0) {
-                        result = num1 / num2;
+                    if (num2 == 0) {
+                        throw new RuntimeException("나눗셈은 0으로 나눌수 없습니다.");
                     }
-                    throw new RuntimeException("나눗셈은 0으로 나눌수 없습니다.");
+                    result = num1 / num2;
                 }
                 default -> throw new RuntimeException("잘못된 기호입니다.");
             }
