@@ -21,7 +21,7 @@ public enum OperatorType {
         this.function = function;
     }
 
-    public OperatorType fromSymbol(char op){
+    public static OperatorType fromSymbol(char op){
         return Arrays.stream(OperatorType.values())
                 .filter(oper -> oper.symbol == op)
                 .findFirst()

@@ -2,9 +2,10 @@ package step3;
 
 import java.util.Scanner;
 
+// 입력만받고 다른곳으로 보내는곳
 public class Input {
     private Scanner sc = new Scanner(System.in);
-
+    // 숫자받기
     public double inputNum (String message){
         System.out.println(message);
         while (!sc.hasNextDouble()){
@@ -12,17 +13,17 @@ public class Input {
             sc.next();
         } return sc.nextDouble();
     }
-
+    // 사칙연산부호 받기
     public char inputOper(String message){
         System.out.println(message);
         return sc.next().charAt(0);
     }
-
+    // 문자받기
     public String inputString(String message) {
         System.out.println(message);
         return sc.next();
     }
-
+    // 스캐너닫기
     public void scClose(){
         sc.close();
     }
