@@ -9,7 +9,6 @@ public class App {
         int num2 = 0;
         String end = "";
 
-
         System.out.println("첫 번째 숫자를 입력하세요");
         num1 = sc.nextInt();
         System.out.println("두 번째 숫자를 입력하세요");
