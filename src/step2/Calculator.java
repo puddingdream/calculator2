@@ -7,11 +7,10 @@ public class Calculator {
     private List<Integer> results = new ArrayList<>();
 
 
-    public  int result;
+    public int result;
 
 
-
-    public int calculator(int num1, int num2, char oper){
+    public int calculator(int num1, int num2, char oper) {
         switch (oper) {
             case '+' -> result = num1 + num2;
             case '-' -> result = num1 - num2;
@@ -19,7 +18,9 @@ public class Calculator {
             case '/' -> {
                 if (num2 != 0) {
                     result = num1 / num2;
+                }
+                System.out.println("나눗셈은 0으로 나눌수없습니다.");
+            }
+        } return result;
     }
-
-
 }

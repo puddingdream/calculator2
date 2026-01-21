@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class App {
     static void main() {
+        Calculator cal = new Calculator();
         Scanner sc = new Scanner(System.in);
         int num1 = 0;
         int num2 = 0;
