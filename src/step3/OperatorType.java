@@ -1,5 +1,6 @@
 package step3;
 
+import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum OperatorType {
@@ -18,6 +19,13 @@ public enum OperatorType {
     OperatorType(char symbol, BiFunction<Double, Double, Double> function) {
         this.symbol = symbol;
         this.function = function;
+    }
+
+    public OperatorType fromSymbol(char op){
+        return Arrays.stream(OperatorType.values())
+                .filter(oper -> oper.symbol == op)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("잘못된 부호입력 : " + op));
     }
 
     public double calculat(double n1, double n2){
