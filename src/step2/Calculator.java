@@ -9,6 +9,9 @@ public class Calculator {
 
     public int result;
 
+    public void addResults(int result){
+        results.add(result);
+    }
 
     public int calculator(int num1, int num2, char oper) {
         switch (oper) {
@@ -18,9 +21,8 @@ public class Calculator {
             case '/' -> {
                 if (num2 != 0) {
                     result = num1 / num2;
-                }
-                System.out.println("나눗셈은 0으로 나눌수없습니다.");
-            }
+                }throw new RuntimeException("나눗셈은 0으로 나눌수없습니다.");
+            }default -> throw new RuntimeException("잘못된 부호 입력 : " + oper);
         } return result;
     }
 }

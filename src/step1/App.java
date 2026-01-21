@@ -31,6 +31,7 @@ public class App {
                     }
                     throw new RuntimeException("나눗셈은 0으로 나눌수 없습니다.");
                 }
+                default -> throw new RuntimeException("잘못된 기호입니다.");
             }
             System.out.println("결과 = " + result);
             System.out.println("그만 계산하려면 'exit' 입력");
