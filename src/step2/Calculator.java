@@ -1,6 +1,7 @@
 package step2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Calculator {
@@ -13,7 +14,7 @@ public class Calculator {
     }
 
     public List<Integer> getResults() { // 리스트내용 가져오기
-        return results;
+        return Collections.unmodifiableList(results);
     }
     public void removeResults(){ // 리스트의 첫번째값 삭제하기
         if(results.isEmpty()){
