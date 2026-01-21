@@ -48,6 +48,5 @@ public class App {
         } while (!end.equalsIgnoreCase("exit"));
         sc.close();
 
-
     }
 }
