@@ -16,7 +16,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("%-10s | %,10d원 | %s", name, price, description);
+        return String.format("%-15s | %,10d원 | %s", name, price, description);
     }
 
 }
