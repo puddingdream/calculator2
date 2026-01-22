@@ -1,6 +1,5 @@
 package commerce;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CommerceSystem {
@@ -15,13 +14,20 @@ public class CommerceSystem {
         menu.registerMenu(1, "상품 조회", () -> viewProducts());
         menu.registerMenu(2, "상품 등록", () -> newProduct());
         menu.registerMenu(3, "상품명 조회", () -> productSearch());
-        menu.registerMenu(4, "장바구니 보기", () -> showCart());
+        menu.registerMenu(4, "장바구니 보기", () -> showCart(), () -> !cart.getCartMap().isEmpty());
+        menu.registerMenu(5, "장바구니 삭제", () -> selectRemove(), () -> !cart.getCartMap().isEmpty());
 
         while (isRunning) {
             menu.showMenuSelection();
             int choice = sc.inputInt("메뉴 숫자를 입력하세요 :");
+
             if (choice == 0) endProgram();
-            else menu.runAction(choice);
+            else if(menu.canRun(choice)){
+                menu.runAction(choice);
+                }else {
+                System.out.println("선택할수 없는 메뉴입니다.");
+            }
+
         }
     }
 
@@ -53,8 +59,7 @@ public class CommerceSystem {
             Product getItem = list.get(--choiceItem);
             System.out.println("선택 : " + getItem);
             addtoCart(getItem);
-        }
-        else System.out.println("존재하지 않는 상품번호입니다.");
+        } else System.out.println("존재하지 않는 상품번호입니다.");
     }
 
 
@@ -125,6 +130,7 @@ public class CommerceSystem {
         if (num == 1) {
             int quantity = sc.inputInt("주문할 수량을 입력하세요 : ");
             if (quantity > 0 && quantity <= getItem.stock) {
+                getItem.stock -= quantity;
                 cart.addProduct(getItem, quantity);
                 System.out.println(getItem.korName + "이(가) " + quantity + "개 담겼습니다.");
             } else {
@@ -145,10 +151,61 @@ public class CommerceSystem {
         int total = cart.getCartMap().entrySet().stream()
                 .mapToInt(i -> i.getKey().price * i.getValue())
                 .sum();
-        System.out.println("총 합계 "+ total);
+        System.out.println("총 합계 " + total);
+        System.out.println("주문하시겠습니까?");
+        System.out.println("1. 주문 확정      2. 메인으로 돌아가기");
+        int choice = sc.inputInt("입력 :");
+        if (choice == 1){
+            cart.getCartMap().forEach((product, orderCount)->{
+                product.stock -= orderCount;
+            });
+            System.out.println("주문이 완료되었습니다! 총 금액 : " + total + "원");
+
+            cart.getCartMap().clear();
+        }
     }
 
+    public void selectRemove() {
+        System.out.println("장바구니 삭제");
+        System.out.println("1. 전체삭제 2. 일부삭제");
+        int num = sc.inputInt("입력");
+        if (num == 1) cartCancel();
+        if (num == 2) cartRemove();
+
+    }
+
+
+    public void cartRemove() {
+        String name = sc.inputString("삭제할 물품의 상품명을 입력하세요 일부입력가능");
+        List<Product> quantity = cart.getCartMap().keySet().stream()
+                .filter(n -> n.korName.contains(name) || n.engName.contains(name))
+                .toList();
+        if(quantity.isEmpty()){
+            System.out.println("장바구니에 해당상품이 없습니다.");
+            return;
+        }
+        for (Product product : quantity) {
+            int count = cart.getCartMap().get(product);
+            product.stock += count;
+            cart.getCartMap().remove(product);
+            System.out.println("해당물품 삭제완료");
+        }
+    }
+
+    public void cartCancel() {
+        cart.getCartMap().forEach((product,count) -> {
+            product.stock += count;
+        });
+        cart.getCartMap().clear();
+        System.out.println("장바구니를 비웠습니다.");
+    }
+
+
+
+
+
 }
+
 
 
 
