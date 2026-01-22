@@ -16,6 +16,7 @@ public class Menu {
     }
 
     public void getMenus() {
+        System.out.println("[ 실시간 커머스 플랫폼 - 전자제품 ]");
         for (int i = 0; i < menus.size(); i++) {
             System.out.print((i + 1) + ". ");
             System.out.println(menus.get(i));
