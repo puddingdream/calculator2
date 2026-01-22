@@ -1,5 +1,6 @@
 package commerce;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CommerceSystem {
@@ -53,7 +54,7 @@ public class CommerceSystem {
             System.out.println("선택 : " + getItem);
             addtoCart(getItem);
         }
-        System.out.println("존재하지 않는 상품번호입니다.");
+        else System.out.println("존재하지 않는 상품번호입니다.");
     }
 
 
@@ -141,8 +142,10 @@ public class CommerceSystem {
         cart.getCartMap().forEach((product, count) -> {
             System.out.println(product.korName + " | " + count + "개 | 합계: " + (product.price * count) + "원");
         });
-
-
+        int total = cart.getCartMap().entrySet().stream()
+                .mapToInt(i -> i.getKey().price * i.getValue())
+                .sum();
+        System.out.println("총 합계 "+ total);
     }
 
 }
