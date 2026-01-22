@@ -16,10 +16,11 @@ public class Menu {
     }
 
     public void getMenus() {
-        menus.stream()
-                .forEach(System.out::println);
+        for (int i = 0; i < menus.size(); i++) {
+            System.out.print((i + 1) + ". ");
+            System.out.println(menus.get(i));
+
+        }System.out.println("0. 종료        | 프로그램 종료");
     }
-
-
 }
 
