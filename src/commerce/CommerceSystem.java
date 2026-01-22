@@ -20,17 +20,14 @@ public class CommerceSystem {
                 menu.runAction(choice);
 
             }
-
         }
     }
 
-
     public void endProgram() {
-        System.out.println("📦 프로그램을 종료합니다. 이용해주셔서 감사합니다.");
+        System.out.println(" 프로그램을 종료합니다. 이용해주셔서 감사합니다.");
         sc.scClose();
         isRunning = false;
     }
-
 
     public void newProduct() {
         System.out.println("\n[ 신규 상품 등록을 시작합니다 ]");
