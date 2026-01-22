@@ -46,7 +46,7 @@ public class CalculatorHead {
             }
             case "4" -> {
                 double number = input.inputNum("필터 기준값을 입력하시오 : "); // 기준값보다 큰값 리스트에서뽑기
-                arithmeticCalculator.filter(number);
+                arithmeticCalculator.betterFilter(number);
             }
             case "0" -> isRinng = false;
 

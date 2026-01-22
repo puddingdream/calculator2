@@ -35,7 +35,7 @@ public class ArithmeticCalculator <T extends Number>{
         results.clear();
     } //배열 전체삭제
 
-    public void filter(double num){ // 도전과제 3-3 보다큰값출력하기
+    public void betterFilter(double num){ // 도전과제 3-3 보다큰값출력하기
         results.stream()
                 .filter(result -> result.doubleValue() > num)
                 .forEach(System.out::println);

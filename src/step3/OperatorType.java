@@ -29,7 +29,7 @@ public enum OperatorType {
     }
 
     //Bifunction과 세트 Bfunction에 담겨있는 enum 계산식을 실행해서 돌려받음
-    public double calculat(double n1, double n2){
+    public double calculate(double n1, double n2){
         return function.apply(n1, n2);
     }
 
