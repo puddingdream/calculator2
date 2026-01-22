@@ -6,13 +6,15 @@ public class CommerceSystem {
     Keyboard sc = new Keyboard();
     Menu menu = new Menu();
     Warehouse warehouse = new Warehouse(); // 창고 추가
+    Cart cart = new Cart();
     private boolean isRunning = true;
 
     public void start() {
         // 메뉴 등록
         menu.registerMenu(1, "상품 조회", () -> viewProducts());
         menu.registerMenu(2, "상품 등록", () -> newProduct());
-        menu.registerMenu(3,"상품명 조회", () -> productSearch());
+        menu.registerMenu(3, "상품명 조회", () -> productSearch());
+        menu.registerMenu(4, "장바구니 보기", () -> showCart());
 
         while (isRunning) {
             menu.showMenuSelection();
@@ -28,28 +30,32 @@ public class CommerceSystem {
         int catId = sc.inputInt("조회할 카테고리 번호: ");
         Category target = warehouse.getCategory(catId);
 
-        if (target != null) {
-            System.out.println("\n[" + target.getName() + " 상품 목록]");
-            List<Product> list = target.getProducts(); // 리스트를 따로 뽑아옵니다.
-
-            for (int i = 0; i < list.size(); i++) {
-                // i + 1 을 해서 1번부터 번호를 매겨줍니다.
-                System.out.println((i + 1) + ". " + list.get(i));
-
-            }
-            int choiceItem = sc.inputInt("선택할 상품 번호를 입력하세요 (0. 돌아가기) : ");
-            if (choiceItem >= 0 && choiceItem <= list.size()) {
-                if (choiceItem == 0) return;
-                Product getItem = list.get(--choiceItem);
-                System.out.println("선택 : " + getItem);
-                // 추가로직 구현할곳
-            } else {
-                System.out.println("존재하지 않는 상품번호입니다.");
-            }
-        } else {
+        if (target == null) {
             System.out.println(" 존재하지 않는 카테고리입니다.");
+            return;
         }
+
+        System.out.println("\n[" + target.getName() + " 상품 목록]");
+        List<Product> list = target.getProducts(); // 리스트를 따로 뽑아옵니다.
+
+        if (list.isEmpty()) {
+            System.out.println("카테고리에 등록된 상품이 없습니다.");
+            return;
+        }
+        for (int i = 0; i < list.size(); i++) {
+            // i + 1 을 해서 1번부터 번호를 매겨줍니다.
+            System.out.println((i + 1) + ". " + list.get(i));
+        }
+        int choiceItem = sc.inputInt("선택할 상품 번호를 입력하세요 (0. 돌아가기) : ");
+        if (choiceItem >= 0 && choiceItem <= list.size()) {
+            if (choiceItem == 0) return;
+            Product getItem = list.get(--choiceItem);
+            System.out.println("선택 : " + getItem);
+            addtoCart(getItem);
+        }
+        System.out.println("존재하지 않는 상품번호입니다.");
     }
+
 
     public void newProduct() {
         System.out.println("\n[ 신규 상품 등록 ]");
@@ -103,8 +109,40 @@ public class CommerceSystem {
             if (choiceItem == 0) return;
             Product getItem = searchList.get(--choiceItem);
             System.out.println("선택 : " + getItem);
-            // 추가로직 구현할곳
+            addtoCart(getItem);
+
         }
+    }
+
+    public void addtoCart(Product getItem) {
+        if (getItem == null) return;
+
+        System.out.println("위 상품을 장바구니에 추가하시겠습니까?");
+        System.out.println("1. 확인         2. 취소");
+        int num = sc.inputInt("입력: ");
+
+        if (num == 1) {
+            int quantity = sc.inputInt("주문할 수량을 입력하세요 : ");
+            if (quantity > 0 && quantity <= getItem.stock) {
+                cart.addProduct(getItem, quantity);
+                System.out.println(getItem.korName + "이(가) " + quantity + "개 담겼습니다.");
+            } else {
+                System.out.println("주문 수량은 재고( " + getItem.stock + "개) 이하여야 합니다.");
+            }
+        }
+    }
+
+    public void showCart() {
+        System.out.println("장바구니 내역");
+        if (cart.getCartMap().isEmpty()) {
+            System.out.println("장바구니가 비어있습니다.");
+            return;
+        }
+        cart.getCartMap().forEach((product, count) -> {
+            System.out.println(product.korName + " | " + count + "개 | 합계: " + (product.price * count) + "원");
+        });
+
+
     }
 
 }
