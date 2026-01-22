@@ -1,5 +1,7 @@
 package commerce;
 
+import java.util.List;
+
 public class CommerceSystem {
     Keyboard sc = new Keyboard();
     Menu menu = new Menu();
@@ -27,8 +29,11 @@ public class CommerceSystem {
 
         if (target != null) {
             System.out.println("\n[" + target.getName() + " 상품 목록]");
-            for (Product p : target.getProducts()) {
-                System.out.println(p);
+            List<Product> list = target.getProducts(); // 리스트를 따로 뽑아옵니다.
+
+            for (int i = 0; i < list.size(); i++) {
+                // i + 1 을 해서 1번부터 번호를 매겨줍니다.
+                System.out.println((i + 1) + ". " + list.get(i));
             }
         } else {
             System.out.println(" 존재하지 않는 카테고리입니다.");
