@@ -12,6 +12,7 @@ public class CommerceSystem {
         // 메뉴 등록
         menu.registerMenu(1, "상품 조회", () -> viewProducts());
         menu.registerMenu(2, "상품 등록", () -> newProduct());
+        menu.registerMenu(3,"상품명 조회", () -> productSearch());
 
         while (isRunning) {
             menu.showMenuSelection();
@@ -34,6 +35,16 @@ public class CommerceSystem {
             for (int i = 0; i < list.size(); i++) {
                 // i + 1 을 해서 1번부터 번호를 매겨줍니다.
                 System.out.println((i + 1) + ". " + list.get(i));
+
+            }
+            int choiceItem = sc.inputInt("선택할 상품 번호를 입력하세요 (0. 돌아가기) : ");
+            if (choiceItem >= 0 && choiceItem <= list.size()) {
+                if (choiceItem == 0) return;
+                Product getItem = list.get(--choiceItem);
+                System.out.println("선택 : " + getItem);
+                // 추가로직 구현할곳
+            } else {
+                System.out.println("존재하지 않는 상품번호입니다.");
             }
         } else {
             System.out.println(" 존재하지 않는 카테고리입니다.");
@@ -54,7 +65,7 @@ public class CommerceSystem {
             int stock = sc.inputInt("재고: ");
 
             target.addProduct(new Product(ename, kname, price, desc, stock));
-            System.out.println( target.getName() + "에 상품이 등록되었습니다.");
+            System.out.println(target.getName() + "에 상품이 등록되었습니다.");
         }
     }
 
@@ -72,6 +83,30 @@ public class CommerceSystem {
         sc.scClose();
         isRunning = false;
     }
+
+    public void productSearch() {
+        String name = sc.inputString("검색할 물건이름 : ");
+        List<Product> searchList = warehouse.getAllProduct().stream()
+                .filter(item -> item.korName.contains(name) || item.engName.contains(name))
+                .toList();
+        if (searchList.isEmpty()) {
+            System.out.println("찾는 상품이 없습니다.");
+            return;
+        }
+        System.out.println("검색된 물품 목록");
+        for (int i = 0; i < searchList.size(); i++) {
+            // i + 1 을 해서 1번부터 번호를 매겨줍니다.
+            System.out.println((i + 1) + ". " + searchList.get(i));
+        }
+        int choiceItem = sc.inputInt("선택할 상품 번호를 입력하세요 (0. 돌아가기) : ");
+        if (choiceItem >= 0 && choiceItem <= searchList.size()) {
+            if (choiceItem == 0) return;
+            Product getItem = searchList.get(--choiceItem);
+            System.out.println("선택 : " + getItem);
+            // 추가로직 구현할곳
+        }
+    }
+
 }
 
 

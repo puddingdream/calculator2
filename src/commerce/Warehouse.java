@@ -57,4 +57,13 @@ public class Warehouse {
     public Category getCategory(int id) {
         return categoryMap.get(id);
     }
+
+    //조회용 모든 상품 담는 리스트
+    public List<Product> getAllProduct(){
+        List<Product> all =new ArrayList<>();
+        for (Category cat : categoryMap.values()) {
+            all.addAll(cat.getProducts());
+        }return all;
+    }
+
 }
