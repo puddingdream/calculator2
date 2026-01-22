@@ -3,51 +3,53 @@ package commerce;
 public class CommerceSystem {
     Keyboard sc = new Keyboard();
     Menu menu = new Menu();
-    private boolean isRuninng = true;
+    private boolean isRunning = true;
 
     public void strat() {
+        menu.registerMenu(1, "상품 조회", () -> menu.getProductList());
+        menu.registerMenu(2, "상품 등록", () -> newProduct());
 
-//        while (isRuninng)
+        while (isRunning) {
 
-        newProduct();
-        newProduct();
+            menu.showMenuSelection();
+            int choice = sc.inputInt("메뉴 숫자를 입력하세요 :");
 
-        menu.getMenus();
+            if (choice == 0) {
+                endProgram(); // 0번이면 종료
+            } else {
+                menu.runAction(choice);
 
+            }
 
-        int choice = sc.inputInt("메뉴 숫자를 입력하세요 :");
-        endChoice(choice);
-
-
-    }
-
-
-    public void endChoice(int choice) {
-        if (choice == 0) {
-            System.out.println(" 프로그램을 종료합니다");
-            sc.scClose();
-            isRuninng = false;
         }
     }
+
+
+    public void endProgram() {
+        System.out.println("📦 프로그램을 종료합니다. 이용해주셔서 감사합니다.");
+        sc.scClose();
+        isRunning = false;
+    }
+
 
     public void newProduct() {
+        System.out.println("\n[ 신규 상품 등록을 시작합니다 ]");
+        String ename = getValidString("영어이름", true);
+        String kname = getValidString("한글이름", false);
+        int price = sc.inputInt("가격: ");
+        String desc = sc.inputString("설명: ");
+        int stock = sc.inputInt("재고: ");
+        menu.addProductMenus(ename, new Product(kname, price, desc, stock));
+        menu.getProductList();
+    }
 
-        String ename;
-        String kname;
+    private String getValidString(String label, boolean isEnglish) {
         while (true) {
-            ename = sc.inputString("추가할 상품의 영어이름을 입력하시오 : ");
-            if(sc.isEnglish(ename))break;
-            System.out.println("영어와 숫자만 입력가능합니다.");
+            String input = sc.inputString(label + "을 입력하시오 : ");
+            if (isEnglish && sc.isEnglish(input)) return input;
+            if (!isEnglish && sc.isKorean(input)) return input;
+            System.out.println("⚠️ 형식에 맞지 않습니다. 다시 입력하세요.");
         }
-        while (true) {
-            kname = sc.inputString("추가할 상품의 한글이름을 입력하시오 : ");
-            if (sc.isKorean(kname))break;
-            System.out.println("한글과 숫자만 입력가능합니다");
-        }
-        int price = sc.inputInt("추가할 상품의 가격을 입력하시오 : ");
-        String description = sc.inputString("추가할 상품의 설명을 입력하시오 : ");
-        int stock = sc.inputInt("추가할 상품의 재고를 입력하시오 : ");
-        menu.addMenus(ename, new Product(kname, price, description, stock));
     }
 
 
