@@ -35,3 +35,50 @@
 
 ### ✅ 효율적인 버퍼 관리
 `Scanner` 사용 시 발생할 수 있는 버퍼 찌꺼기 문제를 `nextLine()`과 `Integer.parseInt()` 조합으로 해결하여 **입력 무결성**을 보장합니다.
+
+
+Java Console Commerce System
+자바의 객체지향 특성과 함수형 인터페이스를 활용한 실시간 재고 관리 커머스 시스템입니다.
+
+🚀 핵심 기능 (Core Features)
+1. 실시간 재고 선점 시스템 (Inventory Reservation)
+Add to Cart: 장바구니에 담는 즉시 원본 재고(stock)를 차감하여 결제 시점의 재고 부족 오류를 원천 차단합니다.
+
+Smart Restore: 장바구니에서 삭제하거나 비울 때, 담겼던 수량만큼 창고 재고를 즉시 복구합니다.
+
+Safe Removal: stream 필터링을 통해 삭제 대상을 먼저 확보한 후 재고를 돌려주는 2단계 삭제 로직을 적용했습니다.
+
+2. 함수형 동적 메뉴 시스템 (Dynamic Menu)
+Supplier<Boolean> 활용: 각 메뉴는 스스로의 노출 조건을 내포합니다. (예: 장바구니가 비어있으면 관련 메뉴 숨김)
+
+Lazy Evaluation: 메뉴판을 출력하는 런타임 시점에 실시간 상태를 체크하여 UI를 동적으로 구성합니다.
+
+Method Delegation: 기본값 제공 패턴을 통해 코드 중복 없이 항상 노출되는 메뉴와 조건부 메뉴를 통합 관리합니다.
+
+3. 고도화된 상품 검색 및 조회
+Keyword Search: 스트림 API를 활용하여 한글/영문 상품명 키워드 검색 기능을 제공합니다.
+
+DRY 원칙 준수: 카테고리 조회와 검색 결과 처리를 공통 메서드(selectAndAddCart)로 추출하여 유지보수성을 극대화했습니다.
+
+🏗️ 기술 스택 및 설계 포인트 (Technical Focus)
+🔍 객체 참조(Object Reference)의 활용
+별도의 ID 검색 로직 없이, 장바구니에 담긴 상품 객체에 직접 접근하여 재고를 수정합니다. 이는 자바의 참조 타입 특성을 활용한 효율적인 데이터 동기화 방식입니다.
+
+🛡️ 방어적 프로그래밍 (Defensive Programming)
+containsKey()를 이용한 사전 검증으로 NullPointerException을 방지합니다.
+
+Math.multiplyExact 개념을 응용하여 수량 계산 시 발생할 수 있는 논리적 오류를 방어합니다.
+
+📂 프로젝트 구조 (Project Structure)
+Plaintext
+
+src/
+├── main/
+│   ├── CommerceSystem.java  # 시스템 메인 루프 및 비즈니스 로직
+│   ├── Menu.java            # Supplier를 활용한 동적 메뉴 관리 객체
+│   ├── Warehouse.java       # 상품 및 카테고리 저장소
+│   ├── Category.java        # 상품 카테고리 도메인
+│   ├── Product.java         # 상품 정보 및 재고 도메인
+│   └── Cart.java            # 장바구니 관리 객체
+└── utils/
+    └── ScannerUtil.java     # 사용자 입력 유효성 검사 도구
