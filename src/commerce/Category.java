@@ -11,10 +11,11 @@ public class Category {
     // [생성자] 카테고리 이름을 받아서 나만의 빈 리스트를 준비함
     public Category(String categoryName) {
         this.categoryName = categoryName;
-        this.products = new ArrayList<>(); // 새로운 독립 바구니 생성 [cite: 2026-01-22]
+        this.products = new ArrayList<>(); // 새로운 독립 바구니 생성 카테고리별로 바구니를 따로씀
     }
 
     // [기능 1] 내 바구니에 상품 하나를 쏙 넣기
+    // 창고안에 카테고리 안에 상품을 추가함
     public void addProduct(Product product) {
         this.products.add(product); // 내 리스트(this.products)에 상품 추가
     }

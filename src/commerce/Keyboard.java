@@ -8,11 +8,11 @@ public class Keyboard {
     public int inputInt (String message){
         while (true){
             System.out.println(message);
-            String input = sc.nextLine().trim();
+            String input = sc.nextLine().trim(); // 숫자 라인으로 받고 공백제거
             try{
-                return Integer.parseInt(input);
+                return Integer.parseInt(input);  // 숫자로 변환할수있으면 return
             } catch (NumberFormatException e){
-                System.out.println(" 정수만 입력 가능합니다.");
+                System.out.println(" 정수만 입력 가능합니다."); // 못하면 다시해
             }
         }
     }

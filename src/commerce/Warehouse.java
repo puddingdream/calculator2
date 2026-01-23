@@ -5,20 +5,21 @@ import java.util.*;
 
 public class Warehouse {
     // 번호로 카테고리 객체를 찾기 위한 관리용 Map (서랍장 역할)
-    private Map<Integer, Category> categoryMap = new LinkedHashMap<>();
+    private Map<Integer, Category> categoryMap = new LinkedHashMap<>(); // 순서가있는 해쉬맵
 
     public Warehouse() {
         // 창고가 열릴 때(생성자) 모든 카테고리와 상품을 세팅합니다.
+        // 여기에 물건쌓아놓으면 보기싫으니까 다른곳에서쌓고 실행만
         initWarehouse();
     }
 
-    private void initWarehouse() {
+    private void initWarehouse() { // 창고안에 카테고리안에 물건 쌓아놓는중
         // 1. 전자제품
         Category electroItem = new Category("전자제품");
         electroItem.addProduct(new Product("Galaxy S25", "갤럭시S25", 1_200_000, "최신 안드로이드 스마트폰", 10));
         electroItem.addProduct(new Product("iPhone 16", "아이폰16", 1_300_000, "Apple의 최신 스마트폰", 10));
         electroItem.addProduct(new Product("MacBook Pro", "맥북프로", 2_400_000, "M3 칩셋 노트북", 10));
-        categoryMap.put(1, electroItem);
+        categoryMap.put(1, electroItem); // 카테고리번호와 이름
 
         // 2. 의류
         Category clothingItem = new Category("의류");
@@ -48,20 +49,20 @@ public class Warehouse {
     // 카테고리 목록을 번호와 함께 출력
     public void showCategoryList() {
         System.out.println("\n--- [ 카테고리를 선택하세요 ] ---");
-        categoryMap.forEach((id, cat) -> {
+        categoryMap.forEach((id, cat) -> { // 카테고리 맵을 하나씩 꺼내서 키 - 값을 출력
             System.out.println(id + ". " + cat.getName());
         });
     }
 
     // 입력받은 번호에 해당하는 Category 객체 반환
-    public Category getCategory(int id) {
+    public Category getCategory(int id) { // 카테고리 번호로  카테고리찾기 ex)1 = 전자제품
         return categoryMap.get(id);
     }
 
     //조회용 모든 상품 담는 리스트
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct(){ // 이름일부만 넣어서 조회할수있게 모든리스트 합친것
         List<Product> all =new ArrayList<>();
-        for (Category cat : categoryMap.values()) {
+        for (Category cat : categoryMap.values()) { // cat 에다  카테고리에 있는 모든객체를 넣음 stream 으로치면 toList
             all.addAll(cat.getProducts());
         }return all;
     }
